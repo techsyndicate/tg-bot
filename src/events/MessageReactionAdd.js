@@ -4,10 +4,7 @@ const Embed = require("../models/embeds");
 module.exports = {
   name: Events.MessageReactionAdd,
   async execute(reaction, user) {
-    let res = null;
-    Embed.findOne({ embed_id: reaction.message.id }).then((result) => {
-      res = result;
-    });
+    let res = await Embed.findOne({ embed_id: reaction.message.id });
     if (reaction.partial) {
       try {
         await reaction.fetch();
