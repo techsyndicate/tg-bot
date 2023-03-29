@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            width: 100vw;
+            min-height: 100vh;
+            background: black;
+            font-family: 'Outfit';
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .inputs{
+            width: min(95vw, 500px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        input,textarea{
+            margin-bottom: 1em;
+            background: #060606;
+            border: 2px solid #16e16e;
+            border-radius: 5px;
+            padding: 10px;
+            color: #EEEEEE;
+            width: 100%;
+        }
+
+        .role-input{
+            display:flex;
+            width: 100%;
+        }
+
+        .emoji{
+            width: 6ch;
+        }
+
+        .role-input>input{
+            margin-right: 10px;
+            margin-bottom: 0.7em;
+        }
+
+        .role-input>button{
+            padding: 10px;
+            background-color: #060606;
+            border: 2px solid #ff353a;
+            color: #ff353a;
+            border-radius: 5px;
+            margin-bottom: 0.7em;
+        }
+
+        .buttons{
+            display:flex;
+            justify-content: space-between;
+        }
+
+        .buttons>button{
+            width: 45%;
+            padding: 10px;
+            font-size: medium;
+            background: #060606;
+            border: 2px solid currentColor;
+            transition: 0.5s ease;
+            margin-top: 10px;
+        }
+
+        #add{
+            color: #5865F2;
+        }
+
+        #create{
+            color: #16e16e;
+        }
+
+        #add:hover{
+            color: #060606;
+            background: #5865F2;
+        }
+
+        #create:hover{
+            color: #060606;
+            background: #16e16e;
+        }
+    </style>
+</head>
+<body>
+    <div class="inputs">
+        <input type="text" placeholder="Title" id="embedTitle"/>
+        <textarea name="" id="desc" cols="30" rows="10" placeholder="Embed Description"></textarea>
+        <input type="text" placeholder="Channel Id" id="embedChannel"/>
+        <div class="emojis">
+            <div class="role-input" id="1">
+                <input type="text" placeholder="🖥️" class="emoji">
+                <input type="text" placeholder="role ID">
+                <button onclick="removeInput(1)">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+        <div class="buttons">
+            <button onclick="addRoleInput()" id="add">Add Role</button>
+            <button onclick="createEmbed()" id="create">Create Embed</button>
+        </div>
+    </div>
+
+
+    <script defer>
+        const emojis=document.querySelector('.emojis');
+        function addRoleInput(){
+            const roleInput=document.createElement('div');
+            roleInput.classList.add('role-input');
+            let input_id=emojis.children.length+1;
+            roleInput.id=input_id;
+            
+            roleInput.innerHTML=`
+                <input type="text" placeholder="🖥️" class="emoji">
+                <input type="text" placeholder="role ID">
+                <button onclick="removeInput(${input_id})">
+                <i class="bi bi-trash"></i>
+                </button>
+            `;
+            emojis.appendChild(roleInput);
+        }
+        function removeInput(el){
+            if(emojis.children.length>1){
+                const roleInput=document.getElementById(el);      
+                emojis.removeChild(roleInput);
+            }
+        }
+
+        function createEmbed(){
+            let roleAr=[];
+            let emojiAr=[];
+
+            for(let i=0;i<emojis.children.length;i++){
+                let emoji=emojis.children[i].children[0].value;
+                let role=emojis.children[i].children[1].value;
+                roleAr.push(role);
+                emojiAr.push(emoji);
+            }
+            console.log(emojiAr);
+            const requestOptions = {
+                method: "POST",
+                body: JSON.stringify({
+                    title: document.getElementById("embedTitle").value,
+                    channel: document.getElementById('embedChannel').value,
+                    description: document.getElementById('desc').value,
+                    roles: roleAr,
+                    emojis: emojiAr
+                }),
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+            };
+            fetch('/sendMsg',requestOptions)
+        }
+    </script>
+</body>
+</html>

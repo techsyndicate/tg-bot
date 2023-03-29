@@ -2,7 +2,12 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, GatewayIntentBits, Partials } = require("discord.js");
+const {
+  Client,
+  GatewayIntentBits,
+  Partials,
+  EmbedBuilder,
+} = require("discord.js");
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -35,7 +40,6 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-client.login(process.env.TOKEN);
 
 // Express APP Code
 
@@ -50,7 +54,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const authRoute = require("./routes/auth");
-const dashRoute = require("./routes/dashboard");
+const createRoute = require("./routes/create");
 
 const mongoose = require("mongoose");
 const dbURI = process.env.MONGO;
@@ -76,13 +80,44 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set("view engine", "ejs");
+app.set("views", "./src/views");
+app.use(express.static("public"));
+app.use(bodyParser.json());
+
 app.use("/auth", authRoute);
-app.use("/dashboard", dashRoute);
+app.use("/create", createRoute);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.render("index");
+});
+//webdev role: 1056831120907444226
+//channel: 1089097936216002591
+app.post("/sendMsg", (req, res) => {
+  const reactEmbed = new EmbedBuilder()
+    .setColor("#16e16e")
+    .setTitle(req.body.title)
+    .setDescription(req.body.description);
+
+  client.guilds.cache
+    .get("1056120977785888838")
+    .client.channels.cache.get(req.body.channel)
+    .send({ embeds: [reactEmbed] })
+    .then((msg) => {
+      for (var i in req.body.emojis) {
+        msg.react(req.body.emojis[i]);
+      }
+      embed_id = msg.id.toString();
+      const embed = new Embed({
+        title: req.body.title,
+        description: req.body.description,
+        embed_id: embed_id,
+        channel_id: req.body.channel,
+        roles: req.body.roles,
+        emojis: req.body.emojis,
+      });
+      embed.save();
+    });
 });
 
-app.post("/embed", (req, res) => {
-  console.log(req.body.user);
-});
+client.login(process.env.TOKEN);

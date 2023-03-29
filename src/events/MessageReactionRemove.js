@@ -1,9 +1,14 @@
 const { Events } = require("discord.js");
-const { roleIds, embed_id } = require("./variables.js");
+const Embed = require("../models/embeds");
 
 module.exports = {
   name: Events.MessageReactionRemove,
   async execute(reaction, user) {
+    let res = null;
+    console.log(reaction.message.id);
+    Embed.findOne({ embed_id: reaction.message.id }).then((result) => {
+      res = result;
+    });
     if (reaction.partial) {
       try {
         await reaction.fetch();
@@ -12,13 +17,19 @@ module.exports = {
         return;
       }
     }
-    const message = reaction.message;
     const emoji = reaction.emoji.name;
-    const member = message.guild.members.cache.get(user.id);
-
-    if (message.id === embed_id) {
-      if (emoji in roleIds) {
-        await member.roles.remove(roleIds[emoji]);
+    const member = reaction.message.guild.members.cache.get(user.id);
+    console.log(res);
+    if (res != null) {
+      roleAr = res.roles;
+      emojiAr = res.emojis;
+      for (var i in emojiAr) {
+        if (emojiAr[i] == emoji) {
+          console.log("removing role");
+          member.roles.remove(roleAr[i]).then(() => {
+            console.log("removed role");
+          });
+        }
       }
     }
   },

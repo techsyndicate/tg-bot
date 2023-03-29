@@ -5,8 +5,8 @@ router.get("/", passport.authenticate("discord"));
 router.get(
   "/redirect",
   passport.authenticate("discord", {
-    failureRedirect: "/failure",
-    successRedirect: "/dashboard",
+    failureRedirect: "/",
+    successRedirect: "/create",
   }),
   (req, res) => {
     res.send(200);

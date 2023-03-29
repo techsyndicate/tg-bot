@@ -10,7 +10,7 @@ function isAuth(req, res, next) {
   }
 }
 router.get("/", isAuth, (req, res) => {
-  res.send("Dahboard page");
+  res.render("create");
 });
 
 module.exports = router;

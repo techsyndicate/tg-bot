@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title></title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    width: 100vw;
+    min-height: 100vh;
+    background: black;
+    font-family: 'Outfit';
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+}
+
+img{
+    width: 250px;
+    margin-bottom: 1.5em;
+}
+
+h1{
+    color: #EEEEEE;
+    font-size: min(55px,9vw);
+    padding: 10px;
+    padding-bottom: 5px;
+    padding-top: 0;
+}
+
+h2{
+    color: #5865F2;
+    background: #060606;
+    border: 1px solid currentColor;
+    padding: 0.5em;
+    border-radius: 5px;
+    margin-top: 1.2em;
+    transition: 0.5s ease;
+    font-size: min(30px,6vw);
+}
+
+h2:hover{
+    color: #060606;
+    background: #5865F2;
+    border: 1px solid currentColor;
+    margin-top: 1em;
+    transition: 0.5s ease;
+}
+
+a{
+    text-decoration: none;
+}
+  </style>
+</head>
+
+<body>
+    <img src="https://avatars.githubusercontent.com/u/50449253?s=200&v=4">
+    <h1>Training Grounds Bot</h1>
+    <a href="/auth"><h2>Authorize with Discord</h2></a>
+</body>
+
+</html>

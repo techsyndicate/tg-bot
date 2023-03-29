@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    width: 100vw;
+    min-height: 100vh;
+    background: black;
+    font-family: 'Outfit';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs{
+    width: min(95vw, 500px);
+    display: flex;
+    flex-direction: column;
+}
+
+input,textarea{
+    margin-bottom: 1em;
+    background: #060606;
+    border: 2px solid #16e16e;
+    border-radius: 5px;
+    padding: 10px;
+    color: #EEEEEE;
+    width: 100%;
+}
+
+.role-input{
+    display:flex;
+    width: 100%;
+}
+
+.emoji{
+    width: 6ch;
+}
+
+.role-input>input{
+    margin-right: 10px;
+    margin-bottom: 0.7em;
+}
+
+.role-input>button{
+    padding: 10px;
+    background-color: #060606;
+    border: 2px solid #ff353a;
+    color: #ff353a;
+    border-radius: 5px;
+    margin-bottom: 0.7em;
+}
+
+.buttons{
+    display:flex;
+    justify-content: space-between;
+}
+
+.buttons>button{
+    width: 45%;
+    padding: 10px;
+    font-size: medium;
+    background: #060606;
+    border: 2px solid currentColor;
+    transition: 0.5s ease;
+    margin-top: 10px;
+}
+
+#add{
+    color: #5865F2;
+}
+
+#create{
+    color: #16e16e;
+}
+
+#add:hover{
+    color: #060606;
+    background: #5865F2;
+}
+
+#create:hover{
+    color: #060606;
+    background: #16e16e;
+}
