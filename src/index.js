@@ -89,7 +89,7 @@ app.use("/auth", authRoute);
 app.use("/create", createRoute);
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index.ejs");
 });
 //webdev role: 1056831120907444226
 //channel: 1089097936216002591

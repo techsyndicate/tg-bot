@@ -10,7 +10,7 @@ function isAuth(req, res, next) {
   }
 }
 router.get("/", isAuth, (req, res) => {
-  res.render("create");
+  res.render("create.ejs");
 });
 
 module.exports = router;
