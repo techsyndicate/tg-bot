@@ -45,16 +45,16 @@ for (const file of eventFiles) {
 
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const session = require("express-session");
 const passport = require("passport");
-const discordStrategy = require("./strategies/discord");
-const Embed = require("./models/embeds");
+const discordStrategy = require("./src/strategies/discord");
+const Embed = require("./src/models/embeds");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const authRoute = require("./routes/auth");
-const createRoute = require("./routes/create");
+const authRoute = require("./src/routes/auth");
+const createRoute = require("./src/routes/create");
 
 const mongoose = require("mongoose");
 const dbURI = process.env.MONGO;
@@ -81,7 +81,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set("view engine", "ejs");
-app.set("views", "./src/views");
+app.set("views", "./src/views/");
 app.use(express.static("public"));
 app.use(bodyParser.json());
 

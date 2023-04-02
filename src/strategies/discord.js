@@ -1,5 +1,6 @@
 const DiscordStrategy = require("passport-discord").Strategy;
 const passport = require("passport");
+require("dotenv").config();
 
 var cur_user = null;
 
@@ -19,7 +20,7 @@ passport.use(
     {
       clientID: process.env.ID,
       clientSecret: process.env.SECRET,
-      callbackURL: "http://localhost:3000/auth/redirect/",
+      callbackURL: process.env.URL,
       scope: ["identify", "guilds", "email"],
     },
     function (accessToken, refreshToken, profile, done) {
