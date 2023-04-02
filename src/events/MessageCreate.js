@@ -1,42 +1,57 @@
-const { Events, EmbedBuilder } = require("discord.js");
+const {
+  Events,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 
-const reactEmbed = new EmbedBuilder()
-  .setColor("#16e16e")
-  .setTitle("Training Grounds Event Roles")
-  .setDescription(
-    `WebD - 🖥️
-    AppD -  📱
-    A/V Editing -  🎞️
-    2D Design  - 🎨
-    UI Design - 🟦
-    Cryptic Hunt - 🔒
-    Group Discussion (GD)  - 🎙️
-    Programming - ⌨️
-    Crossword - 🧩
-    Gaming - 🎮
-    3D - 3️⃣
-    Quiz - 🧠
-    Photography - 📷
-    Capture the flag (CTF) - ⛳
-    Cubing - 🧊`
-  );
+const row = new ActionRowBuilder().addComponents(
+  new ButtonBuilder()
+    .setCustomId("verify_button")
+    .setLabel("Verify Me!")
+    .setStyle(ButtonStyle.Success)
+);
 
 module.exports = {
   name: Events.MessageCreate,
-  execute(msg) {
-    if (msg.content.startsWith("!rolemsg")) {
-      channel = msg.content.split("!rolemsg")[1];
-      c_id = channel.substring(3, channel.length - 1);
-      client.guilds.cache
-        .get("1056120977785888838")
-        .client.channels.cache.get(c_id)
-        .send({ embeds: [reactEmbed] })
-        .then((msg) => {
-          for (var i in roleIds) {
-            msg.react(i);
-          }
-          embed_id = msg.id.toString();
+  async execute(message) {
+    /*if (message.content.startsWith("!verify-members")) {
+      const members = message.guild.members;
+      let unverified = [];
+      members.forEach((member) => {
+        if (!member.roles.cache.has("1056208744977023086")) {
+          unverified.push(member);
+        }
+      });
+      unverified.forEach(async (member) => {
+        const verMsg = await member.send({
+          content:
+            "Welcome to the Training Grounds Server! Please verify yourself by clicking the button below:",
+          components: [row],
         });
+
+        const filter = (interaction) =>
+          interaction.customId === "verify_button" &&
+          interaction.user.id === member.id;
+        const collector = verMsg.createMessageComponentCollector({
+          filter,
+          time: 1500000,
+        });
+        collector.on("collect", async (interaction) => {
+          try {
+            await member.roles.add("1056208744977023086");
+            interaction.reply({
+              content:
+                "You have been verified! Please select your events in the #tg-events channel.",
+              ephemeral: true,
+            });
+          } catch (err) {
+            console.error(err);
+          }
+        });
+      });
     }
+    */
+    console.log("heheha");
   },
 };

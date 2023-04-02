@@ -1,7 +1,7 @@
 //Discord Bot Code
 
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const {
   Client,
   GatewayIntentBits,
@@ -48,13 +48,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 const session = require("express-session");
 const passport = require("passport");
-const discordStrategy = require("./src/strategies/discord");
-const Embed = require("./src/models/embeds");
+const discordStrategy = require("./strategies/discord");
+const Embed = require("./models/embeds");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const authRoute = require("./src/routes/auth");
-const createRoute = require("./src/routes/create");
+const authRoute = require("./routes/auth");
+const createRoute = require("./routes/create");
 
 const mongoose = require("mongoose");
 const dbURI = process.env.MONGO;
