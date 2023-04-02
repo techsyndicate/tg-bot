@@ -81,7 +81,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set("view engine", "ejs");
-app.set("views", "./src/views/");
+app.set('views', __dirname + '/views');
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
