@@ -98,7 +98,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set("view engine", "ejs");
-app.set("views", "./src/views/");
+app.set('views', __dirname + '/views');
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
@@ -106,7 +106,7 @@ app.use("/auth", authRoute);
 app.use("/create", createRoute);
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index.ejs");
 });
 //webdev role: 1056831120907444226
 //channel: 1089097936216002591
